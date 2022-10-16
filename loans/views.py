@@ -25,7 +25,7 @@ class LoanApplicationAPIView(generics.GenericAPIView):
 
 class LoanApplicationRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = LoanApplication.objects.all()
-    serialiazer_class = LoanApplicationSerializer
+    serializer_class = LoanApplicationSerializer
 
     lookup_field = "pk"
 
