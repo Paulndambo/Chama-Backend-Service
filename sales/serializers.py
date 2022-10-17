@@ -9,3 +9,7 @@ class NewMemberOnboardingSerializer(serializers.Serializer):
     education_obj = serializers.JSONField()
     subscription_obj = serializers.JSONField()
     membership = serializers.IntegerField()
+
+
+class BulkMembersOnboardingSerializer(serializers.Serializer):
+    members_file = serializers.FileField()
