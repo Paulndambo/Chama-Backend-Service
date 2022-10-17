@@ -26,6 +26,7 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("finance/", include('finance.urls')),
     path("loans/", include('loans.urls')),
+    path("core/", include('core.urls')),
     path("auth/", include('djoser.urls')),
     path("auth/", include('djoser.urls.jwt')),
     path("", schema_view.with_ui('swagger',

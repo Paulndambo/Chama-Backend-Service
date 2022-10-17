@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.db import transaction
 from users.models import Member, Employment, Subscription, MpesaDetail, Education, FamilyMember
-
+from core.models import Membership
 date_today = datetime.now().date()
 renew_date = date_today + timedelta(days=366)
 
@@ -16,7 +16,7 @@ class NewMemberOnboardingMixin(object):
         
 
     ## TODO: create an atomic transaction here
-
+    
     @transaction.atomic
     def __onboard_new_member(self):
         try:
@@ -29,7 +29,7 @@ class NewMemberOnboardingMixin(object):
             self.__create_member_subscription()
         except Exception as e:
             raise e
-
+    
     """Create User Object"""
     def __create_user(self):
         user_obj = self.data['user_obj']
@@ -44,7 +44,10 @@ class NewMemberOnboardingMixin(object):
         member_obj = self.data['member_obj']
         user = User.objects.filter(email=email).first()
         print("User Object...:", user)
-        member = Member.objects.create(**member_obj, renew_date=renew_date, user=user)
+        membership = Membership.objects.get(id=self.data['membership'])
+        print(membership)
+        member = Member.objects.create(**member_obj, membership=membership, renew_date=renew_date, user=user)
+        #member.membership = membership
         member.save()
         print("New Member created successfully!!!")
 
@@ -88,3 +91,4 @@ class NewMemberOnboardingMixin(object):
         member_subscription = Subscription.objects.create(**member_subscription_obj, member=member)
         member_subscription.save()
         print("Member subscription created successfully!!!")
+        

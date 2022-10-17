@@ -46,7 +46,6 @@ class MemberProfileSerializer(serializers.ModelSerializer):
     #employment = serializers.SerializerMethodField(read_only=True)
     user_data = serializers.SerializerMethodField(read_only=True)
 
-
     class Meta:
         model = Member
         fields = [

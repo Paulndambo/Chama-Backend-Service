@@ -8,4 +8,8 @@ class NewMemberOnboardingSerializer(serializers.Serializer):
     family_obj = serializers.JSONField()
     education_obj = serializers.JSONField()
     subscription_obj = serializers.JSONField()
-    
+    membership = serializers.IntegerField()
+
+
+class BulkMembersOnboardingSerializer(serializers.Serializer):
+    members_file = serializers.FileField()

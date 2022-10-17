@@ -14,6 +14,10 @@ class MemberProfileAPIView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         #member_id = kwargs['member_id']
-        member = Member.objects.filter(user=user).first()
-        serializer = self.serializer_class(instance=member)
+        if user.is_staff:
+            members = Member.objects.all()
+            serializer = self.serializer_class(instance=members, many=True)
+        else:
+            members = Member.objects.filter(user=user).first()
+            serializer = self.serializer_class(instance=members)
         return Response(serializer.data, status=status.HTTP_200_OK)
