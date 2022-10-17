@@ -22,7 +22,7 @@ MARITAL_STATUS = (
 )
 
 class Member(models.Model):
-    #membership = models.ForeignKey(Membership, on_delete=models.PROTECT)
+    membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_number = models.CharField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=255, unique=True)
@@ -134,10 +134,15 @@ class Employment(models.Model):
     def __str__(self):
         return self.member.id_number
 
+SUBSCRIPTION_CHOICES = (
+    ("weekly", "Weekly"),
+    ("monthly", "Monthly"),
+)
+
 class Subscription(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    subscription_title = models.CharField(max_length=255)
-    monthly_rate = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    subscription_title = models.CharField(max_length=255, choices=SUBSCRIPTION_CHOICES)
+    rate = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     cancellation_allowed = models.BooleanField(default=True)
     cancellation_reason = models.CharField(max_length=255, null=True, blank=True)
     start_date = models.DateTimeField(auto_now_add=True)
