@@ -76,7 +76,7 @@ class Member(models.Model):
         subscription = self.subscription_set.all().values(
             "id",
             "subscription_title",
-            "monthly_rate",
+            "rate",
             "start_date",
             "renew_date",
             "cancellation_allowed",
