@@ -31,10 +31,27 @@ class LoanApplicationRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
 
     lookup_field = "pk"
 
-class LoanModelViewSet(ModelViewSet):
-    serializer_class = LoanSerializer
-    queryset = Loan.objects.all()
 
+class LoanApplicationModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LoanApplicationSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return LoanApplication.objects.all()
+        return LoanApplication.objects.filter(member__user=user)
+
+
+class LoanModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LoanSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Loan.objects.all()
+        return Loan.objects.filter(member__user=user)
 
 class LoanGuarantorsModelViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
