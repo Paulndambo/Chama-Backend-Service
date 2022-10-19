@@ -42,7 +42,7 @@ class MemberProfileSerializer(serializers.ModelSerializer):
     #education = EducationSerializer()
     #subscription = SubscriptionSerializer()
     #mpesa_detail = MpesaDetailSerializer()
-    #family_member = FamilyMemberSerializer()
+    #family_member = FamilyMemberSerializer(read_only=True)
     #employment = serializers.SerializerMethodField(read_only=True)
     user_data = serializers.SerializerMethodField(read_only=True)
 
