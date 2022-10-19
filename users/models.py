@@ -41,7 +41,7 @@ class Member(models.Model):
     def __str__(self):
         return self.id_number
 
-
+    
     @property
     def employment(self):
         employment = self.employment_set.all().values(
@@ -85,6 +85,7 @@ class Member(models.Model):
         )
         return subscription
 
+
     @property
     def mpesa_detail(self):
         
@@ -94,8 +95,6 @@ class Member(models.Model):
             "mpesa_number",
             "preferred_payment_day"
         )
-        print(mpesa_detail)
-       
         return mpesa_detail #{"message": "No mpesa detail available"}
     
     @property

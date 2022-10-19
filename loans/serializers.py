@@ -16,10 +16,19 @@ class LoanSerializer(serializers.ModelSerializer):
 class LoanGuarantorSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanGuarantor
-        fields = "__all__"
+        fields = ["id", "name", "member", "id_number", "email", "relationship", 
+                "birth_date", "gender", "marital_status", "postal_code", "town", "country" ]
+
+    def create(self, validated_data):
+        loan_id = self.context['loan_id']
+        return LoanGuarantor.objects.create(loan_id=loan_id, **validated_data)
 
 
 class LoanPaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanPayment
-        fields = "__all__"
+        fields = ["id", "amount", "member", "payment_method", "date_paid"]
+
+    def create(self, validated_data):
+        loan_id = self.context['loan_id']
+        return LoanPayment.objects.create(loan_id=loan_id, **validated_data)

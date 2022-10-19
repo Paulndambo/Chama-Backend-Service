@@ -64,6 +64,7 @@ class Loan(models.Model):
 
 class LoanGuarantor(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     id_number = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255)

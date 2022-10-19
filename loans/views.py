@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 from .models import LoanApplication, Loan, LoanGuarantor, LoanPayment
 from .serializers import LoanGuarantorSerializer, LoanPaymentSerializer, LoanSerializer, LoanApplicationSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 # Create your views here.
 class LoanApplicationAPIView(generics.GenericAPIView):
     queryset = LoanApplication.objects.all()
@@ -30,10 +32,45 @@ class LoanApplicationRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
     lookup_field = "pk"
 
 
+class LoanApplicationModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LoanApplicationSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return LoanApplication.objects.all()
+        return LoanApplication.objects.filter(member__user=user)
+
+
+class LoanModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LoanSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Loan.objects.all()
+        return Loan.objects.filter(member__user=user)
+
+class LoanGuarantorsModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LoanGuarantorSerializer
+
+    def get_serializer_context(self):
+        return {"loan_id": self.kwargs["loan_pk"]}
+    
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return LoanGuarantor.objects.filter(loan_id=self.kwargs["loan_pk"])
+        return LoanGuarantor.objects.filter(loan_id=self.kwargs["loan_pk"]).filter(member__user=user)
+    
+
+
 class LoanAPIView(generics.GenericAPIView):
     queryset = Loan.objects.all()
     serializer_class = LoanSerializer
-
 
     def get(self, request, *args, **kwargs):
         loans = Loan.objects.all()
@@ -101,3 +138,15 @@ class LoanPaymentAPIView(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
 
+class LoanPaymentModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LoanPaymentSerializer
+
+    def get_serializer_context(self):
+        return {"loan_id": self.kwargs["loan_pk"]}
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return LoanPayment.objects.filter(loan_id=self.kwargs['loan_pk'])
+        return LoanPayment.objects.filter(loan_id=self.kwargs['loan_pk']).filter(member__user=user)
