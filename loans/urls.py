@@ -5,7 +5,8 @@ from rest_framework_nested import routers
 
 router = routers.DefaultRouter()
 router.register("loans", views.LoanModelViewSet, basename="loans")
-router.register("loan-applications", views.LoanApplicationViewSet, basename="loan-applications")
+router.register("loan-applications",
+                views.LoanApplicationModelViewSet, basename="loan-applications")
 
 loans_router = routers.NestedDefaultRouter(router, "loans", lookup="loan")
 loans_router.register(
