@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'drf_yasg',
+
+    
     'core',
     'users',
     'finance',
