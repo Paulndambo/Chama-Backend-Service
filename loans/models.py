@@ -39,7 +39,7 @@ class LoanApplication(models.Model):
     amount_applying = models.DecimalField(max_digits=20, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.BooleanField(default="pending", choices=LOAN_CHOICES)
+    status = models.CharField(max_length=255, default="pending", choices=LOAN_CHOICES)
 
     def __str__(self):
         return self.member.id_number
@@ -48,7 +48,7 @@ class LoanApplication(models.Model):
 class Loan(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     loan_type = models.ForeignKey(LoanType, on_delete=models.CASCADE)
-    amount_awared = models.DecimalField(max_digits=20, decimal_places=2)
+    amount_awarded = models.DecimalField(max_digits=20, decimal_places=2)
     amount_to_repay = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_interest = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     amount_repaid = models.DecimalField(max_digits=20, decimal_places=2, default=0)
@@ -56,7 +56,7 @@ class Loan(models.Model):
     status = models.CharField(max_length=100, choices=LOAN_REPAYMENT_CHOICES, default="still_paying")
     expected_last_pay_date = models.DateField(null=True, blank=True)
     date_applied = models.DateField()
-    date_awared = models.DateField()
+    date_awarded = models.DateField()
 
     def __str__(self):
         return self.member.id_number

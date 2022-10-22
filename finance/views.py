@@ -2,7 +2,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status, generics
 from .models import Saving, SavingContribution, MeriGoRoundContribution
-from .serializers import SavingSerializer, SavingContributionSerializer, MeriGoRoundContributionSerializer
+from .serializers import SavingSerializer, SavingContributionSerializer, CreateSavingContributionSerializer, SavingsCreateSerializer, MeriGoRoundContributionSerializer
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 class SavingAPIView(generics.GenericAPIView):
     queryset = Saving.objects.all()
@@ -21,6 +23,32 @@ class SavingAPIView(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class SavingsModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Saving.objects.all()
+    #serializer_class = SavingSerializer
+
+    def get_serializer_context(self):
+        return {"member_id": self.kwargs["member_pk"]}
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return SavingsCreateSerializer
+        return SavingSerializer
+
+
+class SavingContributionModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = SavingContributionSerializer
+    http_method_names = ["get"]
+
+    def get_serializer_context(self):
+        return {"member_id": self.kwargs['member_pk']}
+
+    def get_queryset(self):
+        queryset = SavingContribution.objects.filter(member_id=self.kwargs['member_pk'])
+        return queryset
 
 
 class MeriGoRoundContributionAPIView(generics.GenericAPIView):

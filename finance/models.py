@@ -36,21 +36,22 @@ LOAN_CHOICES = (
 )
 
 # Create your models here.
-class SavingContribution(models.Model):
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    amount = models.FloatField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
-  
-    def __str__(self):
-        return self.member.id_number
-
-
 class Saving(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     year = models.CharField(max_length=4)
     amount_saved = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     interest_earned = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_savings = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.member.id_number
+
+
+class SavingContribution(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    saving = models.ForeignKey(Saving, on_delete=models.CASCADE)
+    amount = models.FloatField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.member.id_number
