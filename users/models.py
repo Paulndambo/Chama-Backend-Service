@@ -181,7 +181,7 @@ class FamilyMember(models.Model):
     phone_number = models.CharField(max_length=255, unique=True)
     email = models.EmailField(null=True, blank=True)
     relationship = models.CharField(max_length=200)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=255, choices=GENDER_CHOICES)
     marital_status = models.CharField(max_length=255, choices=MARITAL_STATUS)
     postal_code = models.CharField(max_length=255)
