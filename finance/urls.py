@@ -4,6 +4,8 @@ from users.urls import member_routers
 member_routers.register("savings", views.SavingsModelViewSet, basename="member-savings")
 member_routers.register("saving-contributions",
                         views.SavingContributionModelViewSet, basename="saving-contributions")
+member_routers.register("meri-go-round-contributions",
+                        views.MemberMerigoRoundContributionModelViewSet, basename="meri-go-round-contributions")
 
 urlpatterns = [
     path("", include(member_routers.urls)),
