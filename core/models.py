@@ -16,7 +16,7 @@ class LoanType(models.Model):
     maximum_amount = models.DecimalField(max_digits=10, decimal_places=2)
     minimum = models.DecimalField(max_digits=10, decimal_places=2)
     repayment_days = models.IntegerField()
-    number_of_guarators = models.IntegerField()
+    number_of_guarantors = models.IntegerField()
     minimum_savings = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):

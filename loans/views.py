@@ -143,6 +143,7 @@ class LoanPaymentModelViewSet(ModelViewSet):
     serializer_class = LoanPaymentSerializer
 
     def get_serializer_context(self):
+        print(self.kwargs)
         return {"loan_id": self.kwargs["loan_pk"]}
 
     def get_queryset(self):
