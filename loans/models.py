@@ -39,7 +39,7 @@ class LoanApplication(models.Model):
     amount_applying = models.DecimalField(max_digits=20, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.BooleanField(default="pending", choices=LOAN_CHOICES)
+    status = models.CharField(default="pending", choices=LOAN_CHOICES, max_length=40)
 
     def __str__(self):
         return self.member.id_number
@@ -91,4 +91,4 @@ class LoanPayment(models.Model):
     date_paid = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.load.member.id_number
+        return self.loan.member.id_number
