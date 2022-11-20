@@ -30,12 +30,12 @@ INSTALLED_APPS = [
     "corsheaders",
     'djoser',
     'drf_yasg',
-    'core',
-    'users',
-    'finance',
+    'api.core',
+    'api.users',
+    'api.finance',
     'sales',
-    'loans',
-    'notifications',
+    'api.loans',
+    'api.notifications',
 ]
 
 MIDDLEWARE = [
