@@ -46,6 +46,7 @@ class LoanApplication(models.Model):
 
 
 class Loan(models.Model):
+    loan_application = models.OneToOneField(LoanApplication, on_delete=models.SET_NULL, null=True)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     loan_type = models.ForeignKey(LoanType, on_delete=models.CASCADE)
     amount_awarded = models.DecimalField(max_digits=20, decimal_places=2)
