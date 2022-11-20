@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.db import transaction
-from api.users.models import Member, Employment, Subscription, MpesaDetail, Education, FamilyMember
-from api.core.models import Membership
+from apps.users.models import Member, Employment, Subscription, MpesaDetail, Education, FamilyMember
+from apps.core.models import Membership
 date_today = datetime.now().date()
 renew_date = date_today + timedelta(days=366)
 

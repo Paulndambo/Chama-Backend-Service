@@ -32,16 +32,12 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     ## API Aps
-    'api.core',
-    'api.users',
-    'api.finance',
-    'api.loans',
-    'api.notifications',
+    'apps.core',
+    'apps.users',
+    'apps.finance',
+    'apps.loans',
+    'apps.notifications',
 
-    ## Fullstack Apps
-    'fullstack.users',
-    'fullstack.finance',
-    'fullstack.loans',
 
     ## Common Apps
     'sales',
