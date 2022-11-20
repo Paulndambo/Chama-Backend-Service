@@ -30,13 +30,15 @@ INSTALLED_APPS = [
     "corsheaders",
     'djoser',
     'drf_yasg',
-
-    
+    'api.core',
+    'api.users',
+    'api.finance',
     'core',
     'users',
     'finance',
     'sales',
-    'loans',
+    'api.loans',
+    'api.notifications',
 ]
 
 MIDDLEWARE = [
@@ -193,3 +195,5 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+#CELERY_BROKER_URL = "amqp://rabbitmq"
